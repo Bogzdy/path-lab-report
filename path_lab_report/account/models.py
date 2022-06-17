@@ -17,10 +17,11 @@ class Account(AbstractUser):
 
 class Patient(Account):
     birth_date = models.DateField(null=True)
-    age = models.IntegerField(null=True)
+    age = models.IntegerField(null=True, blank=True)
     medical_history = models.TextField(blank=True)
 
-
+    class Meta:
+        verbose_name = 'Patient'
 
     def __str__(self):
         return self.username

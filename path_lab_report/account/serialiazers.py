@@ -23,6 +23,21 @@ class PatientSerializer(ModelSerializer):
         model = Patient
         fields = '__all__'
 
+    def create(self, validated_data):
+        if Patient.objects.filter(email=validated_data['email']).exists():
+            raise ValidationError("Email already exits")
+        try:
+            patient = Patient.objects.get(username=validated_data['username'])
+        except:
+            birth_date = validated_data['birth_date']
+            if birth_date:
+                days = datetime.datetime.now().toordinal() - birth_date.toordinal()
+                validated_data['age'] = days//365
+            patient = Patient.objects.create_user(**validated_data)
+            group = Group.objects.get(name="Patients")
+            patient.groups.add(group)
+        return patient
+
 
 class LoginSerializer(TokenObtainPairSerializer):
 
@@ -54,25 +69,12 @@ class RegistrationSerializer(AccountSerializer):
             user = Account.objects.get(username=validated_data['username'])
         except:
             user = Account.objects.create_user(**validated_data)
-            print(f"USER_TYPE: {type(user)}")
         return user
 
 
-class RegistrationPatientSerializer(RegistrationSerializer, PatientSerializer):
+class RegistrationPatientSerializer(PatientSerializer, RegistrationSerializer):
     class Meta:
         model = Patient
         fields = "__all__"
 
-    def create(self, validated_data):
-        if Patient.objects.filter(email=validated_data['email']).exists():
-            raise ValidationError("Email already exits")
-        try:
-            patient = Patient.objects.get(username=validated_data['username'])
-        except:
-            birth_date = validated_data['birth_date']
-            if birth_date:
-                validated_data['age'] = datetime.datetime.now().year - birth_date.year
-            patient = Patient.objects.create_user(**validated_data)
-            group = Group.objects.get(name="Patients")
-            patient.groups.add(group)
-        return patient
+

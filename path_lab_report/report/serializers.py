@@ -7,7 +7,6 @@ from report.models import Report
 class ReportSerializerList(ListSerializer):
 
     def create(self, validated_data):
-        print(f"CREATE in ReportSerializer")
         reports = [Report(**item) for item in validated_data]
         return Report.objects.bulk_create(reports)
 
