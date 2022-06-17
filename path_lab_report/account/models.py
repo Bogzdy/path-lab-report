@@ -13,3 +13,14 @@ class Account(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class Patient(Account):
+    birth_date = models.DateField(null=True)
+    age = models.IntegerField(null=True)
+    medical_history = models.TextField(blank=True)
+
+
+
+    def __str__(self):
+        return self.username

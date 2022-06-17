@@ -1,6 +1,11 @@
 from django.shortcuts import render
-from account.models import Account
-from account.serialiazers import AccountSerializer, LoginSerializer, RegistrationSerializer
+from account.models import Account, Patient
+from account.serialiazers import \
+    AccountSerializer, \
+    PatientSerializer, \
+    LoginSerializer, \
+    RegistrationSerializer, \
+    RegistrationPatientSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -15,9 +20,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 
 
+
+
 class AccountViewSet(LoginRequiredMixin, ModelViewSet):
     serializer_class = AccountSerializer
     queryset = Account.objects.all()
+    login_url = '/login/'
+
+
+class PatientViewSet(LoginRequiredMixin, ModelViewSet):
+    serializer_class = PatientSerializer
+    queryset = Patient.objects.all()
     login_url = '/login/'
 
 
@@ -44,6 +57,10 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
             "refresh": res["refresh"],
             "access": res["access"]
         })
+
+
+class RegistrationPatientViewSet(RegistrationViewSet):
+    serializer_class = RegistrationPatientSerializer
 
 
 class LoginViewSet(ModelViewSet):

@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from account.urls import account_url_pattern
+from report.urls import report_url_pattern
 
 urlpatterns = [
     path('admin/', admin.site.urls)
 ]
-urlpatterns +=account_url_pattern
+urlpatterns += account_url_pattern
+urlpatterns += report_url_pattern
