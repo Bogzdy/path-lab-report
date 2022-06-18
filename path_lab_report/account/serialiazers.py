@@ -14,8 +14,8 @@ class AccountSerializer(ModelSerializer):
         model = Account
         fields = '__all__'
 
-        def create(self, validated_data):
-            return Account(**validated_data)
+        # def create(self, validated_data):
+        #     return Account(**validated_data)
 
 
 class PatientSerializer(ModelSerializer):
@@ -32,7 +32,7 @@ class PatientSerializer(ModelSerializer):
             birth_date = validated_data['birth_date']
             if birth_date:
                 days = datetime.datetime.now().toordinal() - birth_date.toordinal()
-                validated_data['age'] = days//365
+                validated_data['age'] = days // 365
             patient = Patient.objects.create_user(**validated_data)
             group = Group.objects.get(name="Patients")
             patient.groups.add(group)
@@ -44,7 +44,6 @@ class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
-
         data['user'] = AccountSerializer(self.user).data  # TODO Should I return the whole account?
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
@@ -63,18 +62,29 @@ class RegistrationSerializer(AccountSerializer):
         fields = "__all__"
 
     def create(self, validated_data):
+        print(f"----{type(self)}")
         if Account.objects.filter(email=validated_data['email']).exists():
             raise ValidationError("Email already exits")
         try:
+
             user = Account.objects.get(username=validated_data['username'])
         except:
             user = Account.objects.create_user(**validated_data)
         return user
 
 
-class RegistrationPatientSerializer(PatientSerializer, RegistrationSerializer):
+class RegistrationPatientSerializer(PatientSerializer):
     class Meta:
         model = Patient
         fields = "__all__"
 
+    def create(self, validated_data):
+        print(f"----{type(self)}")
+        if Patient.objects.filter(email=validated_data['email']).exists():
+            raise ValidationError("Email already exits")
+        try:
 
+            user = Patient.objects.get(username=validated_data['username'])
+        except:
+            user = Patient.objects.create_user(**validated_data)
+        return user

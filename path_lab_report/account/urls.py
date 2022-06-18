@@ -9,28 +9,25 @@ from account.views import AccountViewSet, \
     logout_user
 
 account_url_pattern = [
-    # Register and login Endpoints
-    path('register/doctor', RegistrationViewSet.as_view({'post': 'create'})),
+    # ____________________Register and login Endpoints_____________________
+    path('register/account', RegistrationViewSet.as_view({'post': 'create'})),
     path('register/patient', RegistrationPatientViewSet.as_view({'post': 'create'})),
     path('login/', LoginViewSet.as_view({'post': 'create'})),
     path('logout/', logout_user),
-    # Accounts Endpoints
+    # ________________________Accounts Endpoints____________________________
     path('accounts/', AccountViewSet.as_view({'get': 'list'})),
-    path('accounts/<int:pk>', AccountViewSet.as_view(actions={'get': 'retrieve'})),
+    path('accounts/<int:pk>', AccountViewSet.as_view({'get': 'retrieve'})),
     # TODO Don't know how to make url without update
-    path('accounts/update/<int:pk>', AccountViewSet.as_view(actions={'patch': 'partial_update'})),
+    path('accounts/update/<int:pk>', AccountViewSet.as_view({'patch': 'partial_update'})),
     path('accounts/delete/<int:pk>', AccountViewSet.as_view({'delete': 'destroy'})),
+    # ____________________________Patients___________________________________
     path('patients/', PatientViewSet.as_view({'get': 'list'})),
+    path('patients/<int:pk>', PatientViewSet.as_view({'get': 'retrieve'})),
     path('patients/patient', PatientViewSet.as_view({'post': 'create'})),
     path('patients/update/<int:pk>', PatientViewSet.as_view({'patch': 'partial_update'})),
-    # Filtering
+    path('patients/delete/<int:pk>', PatientViewSet.as_view({'delete':'destroy'})),
+    # _____________________________Filtering__________________________________
     path('accounts/<slug:username>/reports', AccountViewSet.filter_reports),
     path('patients/<slug:username>/reports', PatientViewSet.get_all_reports),
 ]
 
-# router = DefaultRouter()
-# # router.register(r'accounts', acc_view, basename="accounts")
-# router.register(r'login', LoginViewSet, basename='login')
-# router.register(r'register', RegistrationViewSet, basename='register')
-#
-# account_url = router.urls

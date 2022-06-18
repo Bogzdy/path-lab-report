@@ -14,13 +14,14 @@ from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from django.core.exceptions import ValidationError
 from django.db.models.query import QuerySet
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.hashers import make_password
 from django.shortcuts import redirect
 
 
@@ -28,6 +29,14 @@ class AccountViewSet(LoginRequiredMixin, ModelViewSet):
     serializer_class = AccountSerializer
     queryset = Account.objects.all()
     login_url = '/login/'
+
+
+
+    def update(self, request, *args, **kwargs):
+        if "password" in request.data:
+            password = request.data['password']
+            request.data["password"] = make_password(password)
+        return super().update(request, *args, **kwargs)
 
     @staticmethod  # TODO Is it wrong to use a static method here?
     @api_view(['GET'])
@@ -67,9 +76,17 @@ class PatientViewSet(LoginRequiredMixin, ModelViewSet):
     queryset = Patient.objects.all()
     login_url = '/login/'
 
+    def update(self, request, *args, **kwargs):
+        if "password" in request.data:
+            password = request.data['password']
+            request.data["password"] = make_password(password)
+        return super().update(request, *args, **kwargs)
+
+
     @staticmethod
     @api_view(['GET'])
     def get_all_reports(request, username):
+
         reports = Report.objects.all().filter(account_id__username=username)
         reports_serialized = ReportSerializer(list(reports), many=True)
         if reports_serialized.data:
@@ -81,7 +98,7 @@ class PatientViewSet(LoginRequiredMixin, ModelViewSet):
 class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
     serializer_class = RegistrationSerializer
     permission_classes = (AllowAny,)
-    http_method_names = ['post']
+    http_method_names = ["post", "patch"]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -118,7 +135,6 @@ class LoginViewSet(ModelViewSet):
             serializer.is_valid(raise_exception=True)
             user = Account.objects.get(username=serializer.validated_data['user']['username'])
             login(request, user)  # TODO check this
-
         except TokenError as e:
             raise InvalidToken(e.args[0])
 
