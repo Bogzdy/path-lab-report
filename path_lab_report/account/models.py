@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, User
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from rest_framework.permissions import DjangoModelPermissions
 
 
@@ -9,6 +9,7 @@ class Account(AbstractUser):
     last_name = models.CharField(max_length=30, blank=True)
     email = models.EmailField(unique=True)
 
+
     class Meta:
         verbose_name = 'Account'
 
@@ -16,13 +17,15 @@ class Account(AbstractUser):
         return self.username
 
 
-class Patient(Account):
+class Patient(models.Model):
+    account = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key=True, related_name="patient")
     birth_date = models.DateField(null=True)
     age = models.IntegerField(null=True, blank=True)
-    medical_history = models.TextField(blank=True)
+    medical_history = models.TextField(blank=True, null=True)
+
 
     class Meta:
         verbose_name = 'Patient'
 
     def __str__(self):
-        return self.username
+        return self.account

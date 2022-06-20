@@ -2,17 +2,21 @@ from rest_framework.routers import DefaultRouter
 from django.urls import path
 from django.contrib.auth.views import auth_logout
 from account.views import AccountViewSet, \
-    LoginViewSet, \
-    RegistrationViewSet, \
-    RegistrationPatientViewSet, \
+    AccountLoginView, \
+    AccountRegistrationViewSet, \
     PatientViewSet, \
     logout_user
 
+SIGNUP_ENDPOINTS = {
+    "account": 'account/signup',
+    "patient": 'patient/signup'
+}
+
 account_url_pattern = [
     # ____________________Register and login Endpoints_____________________
-    path('register/account', RegistrationViewSet.as_view({'post': 'create'})),
-    path('register/patient', RegistrationPatientViewSet.as_view({'post': 'create'})),
-    path('login/', LoginViewSet.as_view({'post': 'create'})),
+    path(SIGNUP_ENDPOINTS['account'], AccountRegistrationViewSet.as_view({'post': 'create'})),
+    path(SIGNUP_ENDPOINTS['patient'], AccountRegistrationViewSet.as_view({'post': 'create'})),
+    path('login', AccountLoginView.as_view({'post': 'create'})),
     path('logout/', logout_user),
     # ________________________Accounts Endpoints____________________________
     path('accounts/', AccountViewSet.as_view({'get': 'list'})),
@@ -25,9 +29,8 @@ account_url_pattern = [
     path('patients/<int:pk>', PatientViewSet.as_view({'get': 'retrieve'})),
     path('patients/patient', PatientViewSet.as_view({'post': 'create'})),
     path('patients/update/<int:pk>', PatientViewSet.as_view({'patch': 'partial_update'})),
-    path('patients/delete/<int:pk>', PatientViewSet.as_view({'delete':'destroy'})),
+    path('patients/delete/<int:pk>', PatientViewSet.as_view({'delete': 'destroy'})),
     # _____________________________Filtering__________________________________
     path('accounts/<slug:username>/reports', AccountViewSet.filter_reports),
-    path('patients/<slug:username>/reports', PatientViewSet.get_all_reports),
+    path('patients/reports', PatientViewSet.get_all_reports),
 ]
-

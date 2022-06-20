@@ -7,13 +7,13 @@ class Report(models.Model):
     doctor = models.ForeignKey(Account,
                                null=True,
                                on_delete=models.SET_NULL,
-                               verbose_name='doctor_report',
-                               related_name='doctor_report')
+                               verbose_name='doctor_reports',
+                               related_name='doctor_reports')
     patient = models.ForeignKey(Patient,
                                 null=True,
                                 on_delete=models.SET_NULL,
-                                verbose_name='patient_report',
-                                related_name='patient_report')
+                                verbose_name='patient_reports',
+                                related_name='patient_reports')
     gross_exam = models.TextField('gross examination', null=True)
     microscopic_exam = models.TextField('microscopic examination', null=True)
     immuno_examination = models.TextField('immunohistochemistry examination', null=True)
