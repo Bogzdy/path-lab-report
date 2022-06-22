@@ -6,11 +6,7 @@ from account.views import AccountViewSet, \
     AccountRegistrationViewSet, \
     PatientViewSet, \
     logout_user
-
-SIGNUP_ENDPOINTS = {
-    "account": 'account/signup',
-    "patient": 'patient/signup'
-}
+from account.utils.account_utils import SIGNUP_ENDPOINTS
 
 account_url_pattern = [
     # ____________________Register and login Endpoints_____________________
@@ -32,5 +28,4 @@ account_url_pattern = [
     path('patients/delete/<int:pk>', PatientViewSet.as_view({'delete': 'destroy'})),
     # _____________________________Filtering__________________________________
     path('accounts/<slug:username>/reports', AccountViewSet.filter_reports),
-    path('patients/reports', PatientViewSet.get_all_reports),
 ]

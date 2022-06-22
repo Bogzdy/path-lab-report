@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
-from rest_framework.permissions import DjangoModelPermissions
 
 
 class Account(AbstractUser):
@@ -8,7 +7,6 @@ class Account(AbstractUser):
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     email = models.EmailField(unique=True)
-
 
     class Meta:
         verbose_name = 'Account'
@@ -23,9 +21,8 @@ class Patient(models.Model):
     age = models.IntegerField(null=True, blank=True)
     medical_history = models.TextField(blank=True, null=True)
 
-
     class Meta:
         verbose_name = 'Patient'
 
     def __str__(self):
-        return self.account
+        return str(self.account)

@@ -1,18 +1,20 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
-class ReportCurrentPatientViewPermission(BasePermission):
-    message = "Don't have permission to view this report."
+class IsStaffPermission(BasePermission):
+    message = "Access denied. Staff access only."
+    SAFE_ACTIONS = {'partial_update', 'destroy'}
 
     def has_object_permission(self, request, view, obj):
-        print(f"ReportCurrentPatientViewPermission - {obj}")
-        if request.method in SAFE_METHODS:
-            print(f"user ={type(request.user)} '{request.user}'  obj.patient {type(obj.patient)} '{obj.patient}'")
-            print(f"Statement = {request.user == obj.patient}")
-            if request.user is obj.patient:
-                return True
+        if request.user.is_superuser:
+            return True
+        if request.user.is_staff and request.user.id == obj.doctor_id and view.action in self.SAFE_ACTIONS:
+            return True
+        return False
 
     def has_permission(self, request, view):
-        print(f'request - {request.user}')
-        print(f'view - {view}')
-        return True
+        if request.user.is_staff:
+            return True
+        if request.user.is_authenticated and view.action == 'get_logged_user_reports':
+            return True
+        return False

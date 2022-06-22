@@ -1,4 +1,3 @@
-from django.db import models
 from rest_framework.serializers import ModelSerializer, ListSerializer
 from rest_framework import serializers
 from report.models import Report
