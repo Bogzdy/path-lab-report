@@ -1,7 +1,4 @@
-import {
-    TextField, Container, Divider, Grid, FormControl,
-    MenuItem, Select, InputLabel, Button, Autocomplete
-} from '@mui/material'
+import { TextField, Container, Grid, Button, Autocomplete } from '@mui/material'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import UserFormComponent from './UserFormComponent';
@@ -45,7 +42,7 @@ const labels = {
     }
 }
 
-export default function DisplayReportComponent (props) {
+export default function DisplayReportComponent(props) {
     const isEditable = props.isEditable
     const handleChange = isEditable ? props.handleChange : null
     const handleOnBlur = isEditable ? props.handleOnBlur : null
@@ -54,18 +51,18 @@ export default function DisplayReportComponent (props) {
         getOptionLabel: (option) => option?.username
     }
 
-    return(
+    return (
         <Container maxWidth="md" style={{ marginBottom: 200 }}>
             {isEditable && <>
-            <UserFormComponent
-                dialogOpen={props.dialogOpen}
-                handleCloseDialog={props.handleCloseDialog}
-            />
-            <Snackbar open={props.openAlert} autoHideDuration={2000} onClose={props.handleCloseAlert}>
-                <Alert onClose={props.handleCloseAlert} severity={props.alertSeverity} sx={{ width: '100%' }}>
-                    {props.alertMessage}
-                </Alert>
-            </Snackbar>
+                <UserFormComponent
+                    dialogOpen={props.dialogOpen}
+                    handleCloseDialog={props.handleCloseDialog}
+                />
+                <Snackbar open={props.openAlert} autoHideDuration={2000} onClose={props.handleCloseAlert}>
+                    <Alert onClose={props.handleCloseAlert} severity={props.alertSeverity} sx={{ width: '100%' }}>
+                        {props.alertMessage}
+                    </Alert>
+                </Snackbar>
             </>}
             <Grid container spacing={4} justifyContent="center" alignItems="center">
                 <Grid item xs={4}>

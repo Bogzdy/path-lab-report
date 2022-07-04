@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import { useState, useEffect } from 'react'
 import * as Yup from 'yup'
 import useCustomAxios from '../auth/useCustomAxios'
-import {  PATCH_PATIENT_URL, GET_PATIENTS_URL, POST_PATIENT_URL } from '../constants/urls'
+import { PATCH_PATIENT_URL, GET_PATIENTS_URL } from '../constants/urls'
 import Alert from '@mui/material/Alert'
 import Collapse from '@mui/material/Collapse'
 import IconButton from '@mui/material/IconButton';
@@ -25,7 +25,7 @@ export default function PatientFormComponent(props) {
             first_name: '',
             last_name: '',
             medical_history: '',
-            birth_date:  null
+            birth_date: null
         },
         onSubmit: (values) => {
             updatePatient()
@@ -49,9 +49,9 @@ export default function PatientFormComponent(props) {
         })
     })
 
-    useEffect(() =>{
+    useEffect(() => {
         getPatient()
-    },[])
+    }, [])
 
     const getPatient = async () => {
         customAxios.get(`${GET_PATIENTS_URL}${user.userId}`)
@@ -66,7 +66,7 @@ export default function PatientFormComponent(props) {
                     medical_history: response.data.patient.medical_history
                 }))
             })
-            .catch(e => console.log(e) )
+            .catch(e => console.log(e))
     }
 
 
@@ -96,145 +96,145 @@ export default function PatientFormComponent(props) {
 
 
     return (
-                <Container align="center" >
-                    <form >
-                        <Grid
-                            container
-                            maxWidth='sm'
-                            direction="row"
-                            justifyContent="center"
-                            align="center"
-                            spacing='12'
-                        >
-                            <Grid item xs={12} sm={12} md={12} lg={12}>
-                                <Collapse in={open}>
-                                    <Alert
-                                        severity={severity}
-                                        action={
-                                            <IconButton
-                                                aria-label="close"
-                                                color="inherit"
-                                                size="small"
-                                                onClick={() => {
-                                                    setOpen(false);
-                                                    setMessage(null)
-                                                }}
-                                            >
-                                                <CloseIcon fontSize="inherit" />
-                                            </IconButton>
-                                        }
-                                    >
-                                        {message}
-                                    </Alert>
-                                </Collapse>
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6} >
-                                <TextField
-                                    fullWidth
-                                    required
-                                    name="username"
-                                    id="username"
-                                    label="Username"
-                                    value={formik.values.username}
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                />
-                                {formik.touched.username && formik.errors.username ? (
-                                    <div style={{ color: 'red' }}>{formik.errors.username}</div>
-                                ) : null}
-                            </ Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6}>
-                                <TextField
-                                    fullWidth
-                                    required
-                                    id="email"
-                                    name="email"
-                                    label="Email"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.email}
-                                />
-                                {formik.touched.email && formik.errors.email ? (
-                                    <div style={{ color: 'red' }}>{formik.errors.email}</div>
-                                ) : null}
-                            </ Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6}>
-                                <TextField
-                                    id="first_name"
-                                    name="first_name"
-                                    fullWidth
-                                    label="First Name"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.first_name}
-                                />
-                                {formik.touched.first_name && formik.errors.first_name ? (
-                                    <div style={{ color: 'red' }}>{formik.errors.first_name}</div>
-                                ) : null}
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6}>
-                                <TextField
-                                    id="last_name"
-                                    name="last_name"
-                                    fullWidth
-                                    label="Last Name"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.last_name}
-                                />
-                                {formik.touched.last_name && formik.errors.last_name ? (
-                                    <div style={{ color: 'red' }}>{formik.errors.last_name}</div>
-                                ) : null}
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6}>
-                                <TextField
-                                    multiline
-                                    minRows={4}
-                                    maxRows={4}
-                                    id="medical_history"
-                                    name="medical_history"
-                                    fullWidth
-                                    label="Medical History"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.medical_history}
-                                />
-                            </Grid>
-                            <Grid item
-                                xs={6} sm={6} md={6} lg={6}
-                                spacing={10} direction="row"
-                                justifyContent="center"
-                                align="center"
-                                spacing='12'
-                            >
-                                <Grid item xs={12} sm={12} md={12} lg={12}>
-                                    <TextField
-                                        id="birth_date"
-                                        name="birth_date"
-                                        InputLabelProps={{
-                                            shrink: true,
+        <Container align="center" >
+            <form >
+                <Grid
+                    container
+                    maxWidth='sm'
+                    direction="row"
+                    justifyContent="center"
+                    align="center"
+                    spacing='12'
+                >
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <Collapse in={open}>
+                            <Alert
+                                severity={severity}
+                                action={
+                                    <IconButton
+                                        aria-label="close"
+                                        color="inherit"
+                                        size="small"
+                                        onClick={() => {
+                                            setOpen(false);
+                                            setMessage(null)
                                         }}
-                                        fullWidth
-                                        label="Birth date YYYY-MM-DD"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.birth_date}
-                                    />
-                                    {formik.touched.birth_date && formik.errors.birth_date ? (
-                                        <div style={{ color: 'red' }}>{formik.errors.birth_date}</div>
-                                    ) : null}
-                                </Grid>
-                                <Grid item xs={12} sm={12} md={12} lg={12} >
-                                    <Button
-                                        variant="contained"
-                                        sx={{ margin: 2 }}
-                                        onClick={formik.handleSubmit}
                                     >
-                                        UPDATE
-                                    </Button>
-                                </Grid>
-                            </Grid>
+                                        <CloseIcon fontSize="inherit" />
+                                    </IconButton>
+                                }
+                            >
+                                {message}
+                            </Alert>
+                        </Collapse>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={6} lg={6} >
+                        <TextField
+                            fullWidth
+                            required
+                            name="username"
+                            id="username"
+                            label="Username"
+                            value={formik.values.username}
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.touched.username && formik.errors.username ? (
+                            <div style={{ color: 'red' }}>{formik.errors.username}</div>
+                        ) : null}
+                    </ Grid>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <TextField
+                            fullWidth
+                            required
+                            id="email"
+                            name="email"
+                            label="Email"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.email}
+                        />
+                        {formik.touched.email && formik.errors.email ? (
+                            <div style={{ color: 'red' }}>{formik.errors.email}</div>
+                        ) : null}
+                    </ Grid>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <TextField
+                            id="first_name"
+                            name="first_name"
+                            fullWidth
+                            label="First Name"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.first_name}
+                        />
+                        {formik.touched.first_name && formik.errors.first_name ? (
+                            <div style={{ color: 'red' }}>{formik.errors.first_name}</div>
+                        ) : null}
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <TextField
+                            id="last_name"
+                            name="last_name"
+                            fullWidth
+                            label="Last Name"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.last_name}
+                        />
+                        {formik.touched.last_name && formik.errors.last_name ? (
+                            <div style={{ color: 'red' }}>{formik.errors.last_name}</div>
+                        ) : null}
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <TextField
+                            multiline
+                            minRows={4}
+                            maxRows={4}
+                            id="medical_history"
+                            name="medical_history"
+                            fullWidth
+                            label="Medical History"
+                            onChange={formik.handleChange}
+                            value={formik.values.medical_history}
+                        />
+                    </Grid>
+                    <Grid item
+                        xs={6} sm={6} md={6} lg={6}
+                        spacing={10} direction="row"
+                        justifyContent="center"
+                        align="center"
+                        spacing='12'
+                    >
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                            <TextField
+                                id="birth_date"
+                                name="birth_date"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                fullWidth
+                                label="Birth date YYYY-MM-DD"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.birth_date}
+                            />
+                            {formik.touched.birth_date && formik.errors.birth_date ? (
+                                <div style={{ color: 'red' }}>{formik.errors.birth_date}</div>
+                            ) : null}
                         </Grid>
-                    </form>
-                </Container>
+                        <Grid item xs={12} sm={12} md={12} lg={12} >
+                            <Button
+                                variant="contained"
+                                sx={{ margin: 2 }}
+                                onClick={formik.handleSubmit}
+                            >
+                                UPDATE
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </form>
+        </Container>
     )
 }

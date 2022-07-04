@@ -1,8 +1,7 @@
-import { Container, Grid, Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { GET_ACCOUNT_REPORTS_URL } from '../../constants/urls'
 import useCustomAxios from '../../auth/useCustomAxios'
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom"
 
 export default function Reports(props) {
     const [reports, setReports] = useState()
@@ -18,7 +17,7 @@ export default function Reports(props) {
                 }
             })
             .catch((e) => { console.log(e) })
-            .finally(()=> setIsEachReport(false))
+            .finally(() => setIsEachReport(false))
     }
 
     useEffect(() => {

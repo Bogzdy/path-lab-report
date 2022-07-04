@@ -8,7 +8,7 @@ import Collapse from '@mui/material/Collapse'
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close'
 import { useParams, useNavigate } from 'react-router-dom';
-import {SIGNUP_PATIENT_URL, SIGNUP_DOCTOR_URL } from '../constants/urls'
+import { SIGNUP_PATIENT_URL, SIGNUP_DOCTOR_URL } from '../constants/urls'
 
 export default function RegisterComponent(props) {
     const { type } = useParams()
@@ -18,11 +18,11 @@ export default function RegisterComponent(props) {
     const [severity, setSeverity] = useState()
     const navigate = useNavigate()
 
-    useEffect(()=>{
+    useEffect(() => {
         if (type === 'patient') setPostUrl(SIGNUP_PATIENT_URL)
         if (type === 'doctor') setPostUrl(SIGNUP_DOCTOR_URL)
         console.log(postUrl)
-    },[])
+    }, [])
 
     const formik = useFormik({
         initialValues: {
@@ -85,146 +85,146 @@ export default function RegisterComponent(props) {
                 setMessage(e.response.data.message)
                 setOpen(true)
             })
-            .finally(()=> setTimeout(() => setOpen(false), 3000) )
+            .finally(() => setTimeout(() => setOpen(false), 3000))
     }
 
 
-    return(
- <Container align="center" >
-                    <form >
-                        <Grid
-                            container
-                            maxWidth='sm'
-                            direction="row"
-                            justifyContent="center"
-                            align="center"
-                            spacing='12'
+    return (
+        <Container align="center" >
+            <form >
+                <Grid
+                    container
+                    maxWidth='sm'
+                    direction="row"
+                    justifyContent="center"
+                    align="center"
+                    spacing='12'
+                >
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <Collapse in={open}>
+                            <Alert
+                                severity={severity}
+                                action={
+                                    <IconButton
+                                        aria-label="close"
+                                        color="inherit"
+                                        size="small"
+                                        onClick={() => {
+                                            setOpen(false);
+                                            setMessage(null)
+                                        }}
+                                    >
+                                        <CloseIcon fontSize="inherit" />
+                                    </IconButton>
+                                }
+                            >
+                                {message}
+                            </Alert>
+                        </Collapse>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={6} lg={6} >
+                        <TextField
+                            fullWidth
+                            required
+                            name="username"
+                            id="username"
+                            label="Username"
+                            value={formik.values.username}
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.touched.username && formik.errors.username ? (
+                            <div style={{ color: 'red' }}>{formik.errors.username}</div>
+                        ) : null}
+                    </ Grid>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <TextField
+                            fullWidth
+                            required
+                            id="email"
+                            name="email"
+                            label="Email"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.email}
+                        />
+                        {formik.touched.email && formik.errors.email ? (
+                            <div style={{ color: 'red' }}>{formik.errors.email}</div>
+                        ) : null}
+                    </ Grid>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <TextField
+                            fullWidth
+                            id="password"
+                            name="password"
+                            label="Password"
+                            type="password"
+                            required
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.password}
+                        />
+                        {formik.touched.password && formik.errors.password ? (
+                            <div style={{ color: 'red' }}>{formik.errors.password}</div>
+                        ) : null}
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <TextField
+                            fullWidth
+                            id="confirm_password"
+                            name="confirm_password"
+                            label="Confirm Password"
+                            type="password"
+                            required
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.confirm_password}
+                        />
+                        {formik.touched.confirm_password && formik.errors.confirm_password ? (
+                            <div style={{ color: 'red' }}>{formik.errors.confirm_password}</div>
+                        ) : null}
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <TextField
+                            id="first_name"
+                            name="first_name"
+                            fullWidth
+                            label="First Name"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.first_name}
+                        />
+                        {formik.touched.first_name && formik.errors.first_name ? (
+                            <div style={{ color: 'red' }}>{formik.errors.first_name}</div>
+                        ) : null}
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <TextField
+                            id="last_name"
+                            name="last_name"
+                            fullWidth
+                            label="Last Name"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.last_name}
+                        />
+                        {formik.touched.last_name && formik.errors.last_name ? (
+                            <div style={{ color: 'red' }}>{formik.errors.last_name}</div>
+                        ) : null}
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={12} lg={12} >
+                        <Button
+                            variant="contained"
+                            sx={{ margin: 2 }}
+                            onClick={formik.handleSubmit}
                         >
-                            <Grid item xs={12} sm={12} md={12} lg={12}>
-                                <Collapse in={open}>
-                                    <Alert
-                                        severity={severity}
-                                        action={
-                                            <IconButton
-                                                aria-label="close"
-                                                color="inherit"
-                                                size="small"
-                                                onClick={() => {
-                                                    setOpen(false);
-                                                    setMessage(null)
-                                                }}
-                                            >
-                                                <CloseIcon fontSize="inherit" />
-                                            </IconButton>
-                                        }
-                                    >
-                                        {message}
-                                    </Alert>
-                                </Collapse>
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6} >
-                                <TextField
-                                    fullWidth
-                                    required
-                                    name="username"
-                                    id="username"
-                                    label="Username"
-                                    value={formik.values.username}
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                />
-                                {formik.touched.username && formik.errors.username ? (
-                                    <div style={{ color: 'red' }}>{formik.errors.username}</div>
-                                ) : null}
-                            </ Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6}>
-                                <TextField
-                                    fullWidth
-                                    required
-                                    id="email"
-                                    name="email"
-                                    label="Email"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.email}
-                                />
-                                {formik.touched.email && formik.errors.email ? (
-                                    <div style={{ color: 'red' }}>{formik.errors.email}</div>
-                                ) : null}
-                            </ Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6}>
-                                <TextField
-                                    fullWidth
-                                    id="password"
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    required
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.password}
-                                />
-                                {formik.touched.password && formik.errors.password ? (
-                                    <div style={{ color: 'red' }}>{formik.errors.password}</div>
-                                ) : null}
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6}>
-                                <TextField
-                                    fullWidth
-                                    id="confirm_password"
-                                    name="confirm_password"
-                                    label="Confirm Password"
-                                    type="password"
-                                    required
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.confirm_password}
-                                />
-                                {formik.touched.confirm_password && formik.errors.confirm_password ? (
-                                    <div style={{ color: 'red' }}>{formik.errors.confirm_password}</div>
-                                ) : null}
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6}>
-                                <TextField
-                                    id="first_name"
-                                    name="first_name"
-                                    fullWidth
-                                    label="First Name"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.first_name}
-                                />
-                                {formik.touched.first_name && formik.errors.first_name ? (
-                                    <div style={{ color: 'red' }}>{formik.errors.first_name}</div>
-                                ) : null}
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6} lg={6}>
-                                <TextField
-                                    id="last_name"
-                                    name="last_name"
-                                    fullWidth
-                                    label="Last Name"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.last_name}
-                                />
-                                {formik.touched.last_name && formik.errors.last_name ? (
-                                    <div style={{ color: 'red' }}>{formik.errors.last_name}</div>
-                                ) : null}
-                            </Grid>
-                                <Grid item xs={12} sm={12} md={12} lg={12} >
-                                    <Button
-                                        variant="contained"
-                                        sx={{ margin: 2 }}
-                                        onClick={formik.handleSubmit}
-                                    >
-                                        Register
-                                    </Button>
-                                </Grid>
+                            Register
+                        </Button>
+                    </Grid>
 
-                        </Grid>
-                    </form>
-                </Container>
+                </Grid>
+            </form>
+        </Container>
 
     )
 }

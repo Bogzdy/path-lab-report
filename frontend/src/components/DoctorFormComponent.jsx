@@ -8,11 +8,8 @@ import Alert from '@mui/material/Alert'
 import Collapse from '@mui/material/Collapse'
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close'
-// import { useAuthContext } from '../auth/AuthContext'
 
-const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-
-export default function DoctorFormComponent (props) {
+export default function DoctorFormComponent(props) {
     const customAxios = useCustomAxios()
     const [message, setMessage] = useState()
     const [open, setOpen] = useState(false)
@@ -43,10 +40,10 @@ export default function DoctorFormComponent (props) {
         })
     })
 
-    useEffect(() =>{
+    useEffect(() => {
         console.log(`DoctorFormComponent - user - ${JSON.stringify(user)}`)
         getDoctor()
-    },[])
+    }, [])
 
     const getDoctor = async () => {
         customAxios.get(`${GET_DOCTOR_URL}${user.userId}`)
@@ -58,7 +55,7 @@ export default function DoctorFormComponent (props) {
                     email: response.data.email
                 }))
             })
-            .catch(e => console.log(e) )
+            .catch(e => console.log(e))
     }
 
     const updateDoctor = async () => {
@@ -173,16 +170,16 @@ export default function DoctorFormComponent (props) {
                             <div style={{ color: 'red' }}>{formik.errors.last_name}</div>
                         ) : null}
                     </Grid>
-                        <Grid item xs={12} sm={12} md={12} lg={12} >
-                            <Button
-                                variant="contained"
-                                sx={{ margin: 2 }}
-                                onClick={formik.handleSubmit}
-                            >
-                                UPDATE
-                            </Button>
-                        </Grid>
+                    <Grid item xs={12} sm={12} md={12} lg={12} >
+                        <Button
+                            variant="contained"
+                            sx={{ margin: 2 }}
+                            onClick={formik.handleSubmit}
+                        >
+                            UPDATE
+                        </Button>
                     </Grid>
+                </Grid>
 
             </form>
         </Container>

@@ -1,8 +1,4 @@
-import {
-    TextField, Container, Divider, Grid, FormControl,
-    MenuItem, Select, InputLabel, Button, Autocomplete
-    } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAuthContext } from '../auth/AuthContext'
 import useCustomAxios from '../auth/useCustomAxios'
 import { PATCH_REPORT_URL, POST_REPORT_URL } from '../constants/urls';
@@ -22,12 +18,6 @@ function ReportFormComponent(props) {
     const [patient, setPatient] = useState(props?.report ? props.patients.find((patient) =>
         patient.id == report.patient) : null)
 
-    const staffProps ={
-            isEditable : false,
-            handleOnBlur: handleOnBlur,
-            handleChange : handleChange,
-            isNewReport: props.isNewReport
-    }
 
     const handleChange = (e) => {
         let updatedReport = {}
@@ -102,25 +92,25 @@ function ReportFormComponent(props) {
     }
 
     return (
-    <>
-        <DisplayReportComponent
-            isEditable={user.isStaff ? true : false}
-            handleOnBlur={handleOnBlur}
-            handleChange={handleChange}
-            isNewReport={props.isNewReport}
-            alertSeverity={alertSeverity}
-            alertMessage={alertMessage}
-            dialogOpen={dialogOpen}
-            handleCloseDialog={handleCloseDialog}
-            openAlert={openAlert}
-            handleCloseAlert={handleCloseAlert}
-            handlePatientSelect={handlePatientSelect}
-            patients={props.patients}
-            patient={patient}
-            report={report}
-            handleNewPatientButton={handleNewPatientButton}
-        />
-    </>
+        <>
+            <DisplayReportComponent
+                isEditable={user.isStaff ? true : false}
+                handleOnBlur={handleOnBlur}
+                handleChange={handleChange}
+                isNewReport={props.isNewReport}
+                alertSeverity={alertSeverity}
+                alertMessage={alertMessage}
+                dialogOpen={dialogOpen}
+                handleCloseDialog={handleCloseDialog}
+                openAlert={openAlert}
+                handleCloseAlert={handleCloseAlert}
+                handlePatientSelect={handlePatientSelect}
+                patients={props.patients}
+                patient={patient}
+                report={report}
+                handleNewPatientButton={handleNewPatientButton}
+            />
+        </>
     )
 }
 

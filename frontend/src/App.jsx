@@ -15,8 +15,6 @@ import { useState, useEffect, createContext, useContext } from 'react'
 import { RequireAuth, useAuthContext } from './auth/AuthContext'
 import AppBar from './components/AppBar'
 import GridOfReports from './components/GridOfReports'
-import DisplayReportComponent from './components/DisplayReportComponent'
-import Loading from './components/Loading'
 import Register from './routes/login/Register'
 import RegisterComponent from './components/RegisterComponent'
 
@@ -50,8 +48,8 @@ export default function App(props) {
         console.log('getpatient CALLED')
         setIsEachPatientLoading(true)
         customAxios.get(`${GET_PATIENTS_URL}${user.userId}`)
-            .then((response)=>{
-                setPatients([{...response.data}])
+            .then((response) => {
+                setPatients([{ ...response.data }])
             })
             .catch(e => {
                 setIsEachPatientLoading(false)
@@ -61,7 +59,7 @@ export default function App(props) {
     }
 
     useEffect(() => {
-        if(user.userId !== null) {
+        if (user.userId !== null) {
             user.isStaff ? getPatients() : getPatient()
         }
     }, [user])
@@ -80,35 +78,35 @@ export default function App(props) {
 
     return (
         <ResourceContext.Provider value={context}>
-        <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path='/register' element={<Register/>} >
-                <Route path=':type' element={<RegisterComponent/>} />
-{/*                 <Route path='doctor' element={<DoctorFormComponent/>} /> */}
-            </Route>
-            <Route path="/" element={
-                <RequireAuth>
-                    <AppBar logout={logout} />
-                </RequireAuth>
-                }>
-                <Route path="" element={<Home />} />
-                <Route path="/account" element={<Account />} />
-                <Route path='/reports' element={
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path='/register' element={<Register />} >
+                    <Route path=':type' element={<RegisterComponent />} />
+                    {/*                 <Route path='doctor' element={<DoctorFormComponent/>} /> */}
+                </Route>
+                <Route path="/" element={
                     <RequireAuth>
-                        <Reports />
+                        <AppBar logout={logout} />
                     </RequireAuth>
+                }>
+                    <Route path="" element={<Home />} />
+                    <Route path="/account" element={<Account />} />
+                    <Route path='/reports' element={
+                        <RequireAuth>
+                            <Reports />
+                        </RequireAuth>
                     }>
-                    <Route path='' element={<ListOfReports />} />
-                    <Route path='add' element={<NewReport patients={patients} getPatients={getPatients} />} />
-                    <Route path=':id' element={<Report patients={patients} />} />
+                        <Route path='' element={<ListOfReports />} />
+                        <Route path='add' element={<NewReport patients={patients} getPatients={getPatients} />} />
+                        <Route path=':id' element={<Report patients={patients} />} />
+                    </Route>
+                    <Route path='/search' element={<Search />} >
+                        <Route path='found' element={<GridOfReports patients={patients} />} />
+                        <Route path='found/:id' element={<ViewReport patients={patients} />} />
+                    </Route>
+                    <Route path='/statistics' element={<Statistics />} />
                 </Route>
-                <Route path='/search' element={<Search />} >
-                    <Route path='found' element={<GridOfReports patients={patients} />} />
-                    <Route path='found/:id' element={<ViewReport patients={patients} />} />
-                </Route>
-                <Route path='/statistics' element={<Statistics />} />
-            </Route>
-        </Routes>
+            </Routes>
         </ResourceContext.Provider>
     )
 }

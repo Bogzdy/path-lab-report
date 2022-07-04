@@ -1,25 +1,25 @@
 import axios from 'axios'
-import {useAuthContext} from './AuthContext'
-import {SERVER_URL,GET_NEW_TOKEN_URL} from '../constants/urls'
-import { isExpired, decodeToken } from "react-jwt";
+import { useAuthContext } from './AuthContext'
+import { SERVER_URL, GET_NEW_TOKEN_URL } from '../constants/urls'
+import { isExpired } from "react-jwt";
 
 const useCustomAxios = () => {
-    let {accessToken, refreshToken, setAccessToken} = useAuthContext()
+    let { accessToken, refreshToken, setAccessToken } = useAuthContext()
     const isTokenExpired = isExpired(accessToken)
 
     const axiosInstance = axios.create({
         SERVER_URL,
-        headers:{
+        headers: {
             Authorization: `Bearer ${accessToken}`
         }
     })
 
     axiosInstance.interceptors.request.use(async request => {
-        if(!isTokenExpired) return request
+        if (!isTokenExpired) return request
 
         const response = await axios.post(
             GET_NEW_TOKEN_URL,
-            {refresh: refreshToken}
+            { refresh: refreshToken }
         )
         localStorage.setItem('access', response.data.access)
         setAccessToken(response.data.access)

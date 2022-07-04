@@ -1,66 +1,27 @@
 import { useState, useEffect } from 'react'
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import { Grid, DialogTitle, DialogContentText, DialogContent, DialogActions, Dialog } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Button, Checkbox, TextField, Autocomplete, FormControlLabel, Switch } from '@mui/material';
 import useCustomAxios from '../../auth/useCustomAxios'
 import { GET_FILTERED_REPORTS } from '../../constants/urls'
 import { useAuthContext } from '../../auth/AuthContext'
-import GridOfReports from '../../components/GridOfReports'
 import { Outlet, useNavigate } from "react-router-dom";
 import Loading from '../../components/Loading'
 
 
 const queryParams = [
     { name: 'First Name', param: 'patient_first_name', value: null },
-    { name: 'Last Name', param: 'patient_last_name', value:null },
-    { name: 'Gross exam', param: 'gross_exam', value:null },
-    { name: 'Microscopic exam', param: 'microscopic_exam', value:null },
-    { name: 'Immunohistochemistry exam', param: 'immuno_examination', value:null },
-    { name: 'Special stains', param: 'special_stain_exam', value:null },
-    { name: 'Diagnosis', param: 'diagnosis', value:null },
-    { name: 'Medical codes', param: 'medical_codes', value:null },
-    { name: 'Topography codes', param: 'topography_codes', value:null }
+    { name: 'Last Name', param: 'patient_last_name', value: null },
+    { name: 'Gross exam', param: 'gross_exam', value: null },
+    { name: 'Microscopic exam', param: 'microscopic_exam', value: null },
+    { name: 'Immunohistochemistry exam', param: 'immuno_examination', value: null },
+    { name: 'Special stains', param: 'special_stain_exam', value: null },
+    { name: 'Diagnosis', param: 'diagnosis', value: null },
+    { name: 'Medical codes', param: 'medical_codes', value: null },
+    { name: 'Topography codes', param: 'topography_codes', value: null }
 ]
 
-const q = {
-    patient_first_name:{
-        name: 'First Name',
-        value: null
-    },
-    patient_last_name_name:{
-        name: 'Last Name',
-        value: null
-    },
-    gross_exam:{
-        name: 'Gross exam',
-        value: null
-    },
-    microscopic_exam:{
-        name: 'Microscopic exam',
-        value: null
-    },
-    immuno_examination:{
-        name: 'Immunohistochemistry',
-        value: null
-    },
-    special_stain_exam:{
-        name: 'Special stains',
-        value: null
-    },
-    diagnosis:{
-        name: 'Diagnosis',
-        value: null
-    },
-    medical_codes:{
-        name: 'Medical codes',
-        value: null
-    },
-    topography_codes:{
-        name: 'Topography codes',
-        value: null
-    }
-}
 
 export default function Search(props) {
     const { user } = useAuthContext()
@@ -171,9 +132,9 @@ export default function Search(props) {
                 </Grid>
             </Grid>
             {
-            isLoading
-            ? <Loading/>
-            : <Outlet context={context} />
+                isLoading
+                    ? <Loading />
+                    : <Outlet context={context} />
             }
         </div>
     );

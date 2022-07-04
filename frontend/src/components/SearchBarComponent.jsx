@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import { Grid, DialogTitle, DialogContentText, DialogContent, DialogActions, Dialog } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Button, Checkbox, TextField, Autocomplete, FormControlLabel, Switch } from '@mui/material';
 import useCustomAxios from '../auth/useCustomAxios'
-import {GET_FILTERED_REPORTS} from '../constants/urls'
 import { useAuthContext } from '../auth/AuthContext'
 import GridOfReports from './components/GridOfReports'
 
@@ -23,7 +22,6 @@ export default function Search(props) {
     const [selectedParams, setSelectedParams] = useState([])
     const [params, setParams] = useState()
     const [isEachReportYours, setIsEachReportYours] = useState(false)
-    const customAxios = useCustomAxios()
     const { user } = useAuthContext()
 
     const handleFilterChange = (event, value) => {
@@ -42,7 +40,7 @@ export default function Search(props) {
         }))
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log('useEffect')
         let updatedParam = {}
         isEachReportYours ? updatedParam['doctor'] = user.userId : updatedParam['doctor'] = null
@@ -57,7 +55,7 @@ export default function Search(props) {
         getFilteredReports()
     }
 
-    return(
+    return (
         <div>
             <Grid container maxWidth={1} p={1} spacing={1} margin={1}>
                 <Grid container sm={8} md={8} lg={8} spacing={1}>
@@ -103,9 +101,9 @@ export default function Search(props) {
                     </Grid>
                     <Grid item sm={12} md={12} lg={12} >
                         <FormControlLabel
-                             control={<Switch checked={isEachReportYours} onChange={()=> setIsEachReportYours(!isEachReportYours)}/>}
-                             label="Your reports"
-                         />
+                            control={<Switch checked={isEachReportYours} onChange={() => setIsEachReportYours(!isEachReportYours)} />}
+                            label="Your reports"
+                        />
                     </Grid>
                     <Grid item sm={12} md={12} lg={12} >
                         <Button variant="contained" >Contained</Button>
