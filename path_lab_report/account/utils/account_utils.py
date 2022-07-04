@@ -1,7 +1,7 @@
 from datetime import datetime
 
 SIGNUP_ENDPOINTS = {
-    "account": 'account/signup',
+    "account": 'doctor/signup',
     "patient": 'patient/signup'
 }
 

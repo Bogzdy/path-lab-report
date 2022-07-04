@@ -17,9 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from account.urls import account_url_pattern
 from report.urls import report_url_pattern
+from path_lab_report.views import front
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('', front, name='front'),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 urlpatterns += account_url_pattern
 urlpatterns += report_url_pattern

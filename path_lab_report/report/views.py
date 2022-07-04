@@ -1,3 +1,5 @@
+import time
+
 from report.models import Report
 from report.serializers import ReportSerializer
 from rest_framework.viewsets import ModelViewSet
@@ -19,6 +21,12 @@ class ReportViewSet(ModelViewSet):
     #     self.perform_create(serializer)
     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    # # TODO delete dispatch function (simulates delay from server)
+    # def dispatch(self, request, *args, **kwargs):
+    #     print('DISPATCH - sleeping')
+    #     time.sleep(4)
+    #     return super().dispatch(request, *args, **kwargs)
+
     def create(self, request, *args, **kwargs):
         doctor_id = request.user.id
         request.data['doctor'] = doctor_id
@@ -39,7 +47,7 @@ class ReportViewSet(ModelViewSet):
         else:
             reports = Report.objects.none()
         if not reports:
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response([], status=status.HTTP_204_NO_CONTENT)
 
         serializer = self.get_serializer(reports, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -48,6 +56,7 @@ class ReportViewSet(ModelViewSet):
     def filter_reports(self, request):
         query = Report.objects.all()
 
+        doctor_id_q_param = request.query_params.get('doctor_id')
         doctor_first_name_q_param = request.query_params.get('doctor_first_name')
         doctor_last_name_q_param = request.query_params.get('doctor_last_name')
         patient_first_name_q_param = request.query_params.get('patient_first_name')
@@ -60,6 +69,9 @@ class ReportViewSet(ModelViewSet):
         medical_codes_q_param = request.query_params.get('medical_codes')
         topography_codes_q_param = request.query_params.get('topography_codes')
 
+        if doctor_id_q_param:
+            query = query.filter(
+                doctor=doctor_id_q_param)
         if doctor_first_name_q_param:
             query = query.filter(
                 doctor__first_name__iexact=doctor_first_name_q_param)
