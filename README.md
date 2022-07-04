@@ -13,3 +13,33 @@ popular technologies like django, mysql, react.
 
 # Setup
 
+### Django framework setup and database configuration
+
+- Install and activate a python virtual environment 
+- Install dependencies from 'Project\path-lab-report\requirements.txt' using:
+> pip install -r requirements.txt
+- Configure database settings in 'Project\path-lab-report\path_lab_report\path_lab_report\settings.py'
+- Example
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'path_lab_report',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
+        'PORT': '3306'
+    }
+}
+```
+- Apply migration 
+> python manage.py migrate
+
+### React framework setup
+
+- Change directory to 'Project\path-lab-report\frontend' and install dependencies:
+> npm install
+
+- Back to Django 'Project\path-lab-report\path_lab_report\path_lab_report\' start server:
+> python manage.py runserver
+
