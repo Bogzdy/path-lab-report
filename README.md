@@ -33,6 +33,8 @@ DATABASES = {
 }
 ```
 - Apply migration 
+> cd path_lab_report
+
 > python manage.py migrate
 
 ### React framework setup
