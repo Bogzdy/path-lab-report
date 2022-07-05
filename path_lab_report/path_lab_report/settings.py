@@ -82,8 +82,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'path_lab_report',
         'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
+        'PASSWORD': 'password',
+        'HOST': 'path-lab-report-db.cgcqs4onzw70.eu-central-1.rds.amazonaws.com',  # Or an IP Address that your DB is hosted on
         'PORT': '3306'
     }
 }
