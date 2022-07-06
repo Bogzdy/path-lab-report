@@ -18,3 +18,6 @@ global:
   profile: eb-cli
   sc: git
   workspace_type: Application
+packages:
+    yum:
+        MySQL-python: []
