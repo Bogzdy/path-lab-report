@@ -1,5 +1,5 @@
 
-export const SERVER_URL = 'https://www.pathlabreport.click/api'
+export const SERVER_URL = 'http://127.0.0.1:8000'
 export const GET_ACCOUNT_REPORTS_URL = `${SERVER_URL}/reports/account-reports`
 export const GET_NEW_TOKEN_URL = `${SERVER_URL}/token/refresh/`
 export const GET_PATIENTS_URL = `${SERVER_URL}/patients/`
