@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-ls_#%jquobp$$)j4z$58l$5)26r#-)rml4e8qbf&^z=v)6&76j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-env.eba-dbfpmudt.eu-central-1.elasticbeanstalk.com']
-# ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['django-env.eba-dbfpmudt.eu-central-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -76,16 +76,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'path_lab_report.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+# AWS RDS
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'path_lab_report',
+#         'USER': 'root',
+#         'PASSWORD': 'password',
+#         'HOST': 'pathdb.cgcqs4onzw70.eu-central-1.rds.amazonaws.com',  # Or an IP Address that your DB is hosted on
+#         'PORT': '3306'
+#     }
+# }
 
+# Localhost database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'path_lab_report',
         'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': 'path-lab-report-db.cgcqs4onzw70.eu-central-1.rds.amazonaws.com',  # Or an IP Address that your DB is hosted on
+        'PASSWORD': 'root',
+        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
         'PORT': '3306'
     }
 }

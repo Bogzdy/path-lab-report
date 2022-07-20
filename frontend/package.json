@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "django-env.eba-dbfpmudt.eu-central-1.elasticbeanstalk.com",
+    "homepage": "https://www.pathlabreport.click/",
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
     "@emotion/react": "^11.9.3",

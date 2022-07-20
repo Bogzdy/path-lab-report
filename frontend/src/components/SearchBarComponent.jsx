@@ -25,13 +25,10 @@ export default function Search(props) {
     const { user } = useAuthContext()
 
     const handleFilterChange = (event, value) => {
-        console.log(`handleParamsChange ${value}`)
         setSelectedParams(value)
     }
 
     const handleParamsOnChange = (e) => {
-        console.log(`e.targe.id ${e.target.id}`)
-        console.log(`e.targe.value ${e.target.value}`)
         let updatedParam = {}
         updatedParam[e.target.id] = e.target.value
         setParams(param => ({
@@ -41,7 +38,6 @@ export default function Search(props) {
     }
 
     useEffect(() => {
-        console.log('useEffect')
         let updatedParam = {}
         isEachReportYours ? updatedParam['doctor'] = user.userId : updatedParam['doctor'] = null
         setParams(param => ({
@@ -51,7 +47,6 @@ export default function Search(props) {
     }, [isEachReportYours])
 
     const handleOnBlur = (e) => {
-        console.log(`on blur param ${JSON.stringify(params)}`)
         getFilteredReports()
     }
 

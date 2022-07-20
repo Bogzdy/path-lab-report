@@ -31,7 +31,6 @@ export default function App(props) {
     const [isEachPatientLoading, setIsEachPatientLoading] = useState(true)
 
     const getPatients = () => {
-        console.log('getPatients CALLED')
         setIsEachPatientLoading(true)
         customAxios.get(GET_PATIENTS_URL)
             .then((response) => {
@@ -45,7 +44,6 @@ export default function App(props) {
     }
 
     const getPatient = async () => {
-        console.log('getpatient CALLED')
         setIsEachPatientLoading(true)
         customAxios.get(`${GET_PATIENTS_URL}${user.userId}`)
             .then((response) => {
@@ -65,7 +63,6 @@ export default function App(props) {
     }, [user])
 
     useEffect(() => {
-        console.log(`useEffect patients ${patients}`)
         setIsEachPatientLoading(false)
     }, [patients])
 

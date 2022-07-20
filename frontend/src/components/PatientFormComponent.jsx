@@ -56,7 +56,6 @@ export default function PatientFormComponent(props) {
     const getPatient = async () => {
         customAxios.get(`${GET_PATIENTS_URL}${user.userId}`)
             .then(response => {
-                console.log(`response.data ${JSON.stringify(response.data)}`)
                 formik.setValues(value => ({
                     username: response.data.username,
                     first_name: response.data.first_name,

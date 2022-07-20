@@ -41,7 +41,6 @@ export default function DoctorFormComponent(props) {
     })
 
     useEffect(() => {
-        console.log(`DoctorFormComponent - user - ${JSON.stringify(user)}`)
         getDoctor()
     }, [])
 

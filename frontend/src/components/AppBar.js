@@ -38,13 +38,15 @@ const ResponsiveAppBar = (props) => {
   };
 
   const handleCloseNavMenu = (e) => {
+    navigate(`/${e.target.id}`, {replace: true})
     setAnchorElNav(null);
+
   };
 
   const handleCloseUserMenu = (e) => {
-    setAnchorElUser(null);
     if (e.target.id == 'Account') navigate('/account', { replace: true })
     props.logout(e)
+    setAnchorElUser(null);
   };
 
   return (
@@ -64,8 +66,7 @@ const ResponsiveAppBar = (props) => {
                   fontFamily: 'BlinkMacSystemFont',
                   fontWeight: 500,
                   letterSpacing: '.1rem',
-                  color: 'inherit',
-                  textDecoration: 'none',
+                  color: 'white',
                 }}
               >
                 PathLabReport
@@ -101,8 +102,8 @@ const ResponsiveAppBar = (props) => {
                 }}
               >
                 {getPages(user.isStaff).map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <MenuItem key={page}  onClick={handleCloseNavMenu}>
+                    <Typography id={page.toLowerCase()} textAlign="center">{page}</Typography>
                   </MenuItem>
                 ))}
               </Menu>

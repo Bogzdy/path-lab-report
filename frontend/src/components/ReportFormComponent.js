@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../auth/AuthContext'
 import useCustomAxios from '../auth/useCustomAxios'
-import { PATCH_REPORT_URL, POST_REPORT_URL } from '../constants/urls';
+import { PATCH_REPORT_URL, POST_REPORT_URL, DELETE_REPORT_URL } from '../constants/urls';
 import DisplayReportComponent from './DisplayReportComponent'
-
+import { useNavigate } from "react-router-dom";
 
 
 function ReportFormComponent(props) {
     const customAxios = useCustomAxios()
+    const navigate = useNavigate()
     const { user } = useAuthContext()
     const doctor = { 'doctor': user.userId }
     const [dialogOpen, setDialogOpen] = useState(false)
@@ -41,7 +42,6 @@ function ReportFormComponent(props) {
         if (report.id) {
             customAxios.patch(`${PATCH_REPORT_URL}/${report.id}`, { ...report })
                 .then(response => {
-                    console.log(response)
                     if (response.status === 200) {
                         setAlertMessage('Report has been updated')
                         setAlertSeverity('success')
@@ -57,7 +57,6 @@ function ReportFormComponent(props) {
         } else {
             customAxios.post(POST_REPORT_URL, { ...report })
                 .then(response => {
-                    console.log(response)
                     setReport(report => ({
                         ...report,
                         "id": response.data.id
@@ -80,6 +79,27 @@ function ReportFormComponent(props) {
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') return
         setOpenAlert(false)
+    }
+
+    const handleDeleteReport = () => {
+        customAxios.delete(`${DELETE_REPORT_URL}${report.id}`)
+            .then(response => {
+                if (response.status == 204){
+                    setAlertMessage('Report has been deleted. Redirecting...')
+                    setAlertSeverity('warning')
+                    setOpenAlert(true)
+                    setTimeout(() => {
+                        navigate('/reports', {replace: true})
+                    }, 2000)
+
+                }
+            })
+            .catch(e => {
+                console.log(e)
+                setAlertMessage('Something went wrong!')
+                setAlertSeverity('error')
+                setOpenAlert(true)
+            })
     }
 
     const handleNewPatientButton = () => setDialogOpen(true)
@@ -105,6 +125,7 @@ function ReportFormComponent(props) {
                 openAlert={openAlert}
                 handleCloseAlert={handleCloseAlert}
                 handlePatientSelect={handlePatientSelect}
+                handleDeleteReport={handleDeleteReport}
                 patients={props.patients}
                 patient={patient}
                 report={report}

@@ -1,4 +1,5 @@
 import { TextField, Container, Grid, Button, Autocomplete } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import UserFormComponent from './UserFormComponent';
@@ -87,6 +88,17 @@ export default function DisplayReportComponent(props) {
                             variant="contained"
                             onClick={props.handleNewPatientButton}>
                             NEW PATIENT
+                        </Button>
+                    </Grid>
+                }
+                {
+                    (isEditable && !props.isNewReport) &&
+                    <Grid item xs={4}>
+                        <Button
+                            variant="outlined"
+                            startIcon={<DeleteIcon />}
+                            onClick={props.handleDeleteReport}>
+                            Delete
                         </Button>
                     </Grid>
                 }

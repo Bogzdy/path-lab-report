@@ -8,7 +8,7 @@ const useCustomAxios = () => {
     const isTokenExpired = isExpired(accessToken)
 
     const axiosInstance = axios.create({
-        SERVER_URL,
+        baseURL: SERVER_URL,
         headers: {
             Authorization: `Bearer ${accessToken}`
         }
